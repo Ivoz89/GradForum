@@ -5,43 +5,39 @@
  */
 package com.gft.grad.forum.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
+import lombok.Data;
 
 /**
  *
  * @author izielinski
  */
-public class Board {
+@Entity
+@Data
+public class Board implements Serializable {
 
-    private List<ForumThread> threads;
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Version
+    private Long version = 0L;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<ForumThread> threads = new ArrayList<>();
+
     @Size(min = 3, max = 15)
+    @Column(unique = true)
     private String name;
-
-    public Board() {
-        threads = new ArrayList<>();
-    }
-
-    public Board(String name) {
-        threads = new ArrayList<>();
-        this.name = name;
-    }
-
-    public List<ForumThread> getThreads() {
-        return threads;
-    }
-
-    public void setThreads(List<ForumThread> threads) {
-        this.threads = threads;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

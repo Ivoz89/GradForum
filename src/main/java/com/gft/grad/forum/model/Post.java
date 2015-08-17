@@ -5,55 +5,35 @@
  */
 package com.gft.grad.forum.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Version;
+import lombok.Data;
 
 /**
  *
  * @author izielinski
  */
-public class Post {
+@Entity
+@Data
+public class Post implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    @Version
+    private Long version = 0L;
 
     private String text;
+    
     private Date date;
+
+    @ManyToOne
     private ForumUser creator;
-
-    public Post() {
-        date = new Date();
-    }
-
-    public Post(String text) {
-        date = new Date();
-        this.text = text;
-    }
-
-    public Post(String text, ForumUser creator) {
-        date = new Date();
-        this.text = text;
-        this.creator = creator;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public ForumUser getCreator() {
-        return creator;
-    }
-
-    public void setCreator(ForumUser creator) {
-        this.creator = creator;
-    }
-
 }

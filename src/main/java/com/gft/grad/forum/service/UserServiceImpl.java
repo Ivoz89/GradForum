@@ -7,7 +7,7 @@ package com.gft.grad.forum.service;
 
 import com.gft.grad.forum.controller.Credentials;
 import com.gft.grad.forum.model.ForumUser;
-import com.gft.grad.forum.model.repo.ForumRepository;
+import com.gft.grad.forum.model.repo.ForumUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,21 +19,21 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    ForumRepository forumRepository;
+    ForumUserRepository forumUserRepository;
 
     @Override
-    public ForumUser logIn(Credentials credentials) {
-        return forumRepository.logIn(credentials);
+    public ForumUser logIn(Credentials c) {
+        return forumUserRepository.findByUsernameAndPassword(c.getUsername(), c.getPassword());
     }
 
     @Override
     public void register(ForumUser forumUser) {
-        forumRepository.addUser(forumUser);
+        forumUserRepository.save(forumUser);
     }
 
     @Override
     public ForumUser findByUsername(String username) {
-        return forumRepository.findByLogin(username);
+        return forumUserRepository.findByUsername(username);
     }
 
 }

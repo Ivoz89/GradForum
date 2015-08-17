@@ -6,7 +6,7 @@
 package com.gft.grad.forum.service;
 
 import com.gft.grad.forum.model.Board;
-import com.gft.grad.forum.model.repo.ForumRepository;
+import com.gft.grad.forum.model.repo.BoardRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +19,15 @@ import org.springframework.stereotype.Service;
 public class ForumServiceImpl implements ForumService {
 
     @Autowired
-    ForumRepository forumRepository;
+    BoardRepository boardRepository;
 
     @Override
     public List<Board> obtainBoards() {
-        return forumRepository.findAllBoards();
+        return boardRepository.findAll();
     }
 
     @Override
     public void addBoard(Board board) {
-        forumRepository.addBoard(board);
+        boardRepository.save(board);
     }
 }

@@ -5,8 +5,9 @@
  */
 package com.gft.grad.forum.service;
 
+import com.gft.grad.forum.model.ForumThread;
 import com.gft.grad.forum.model.Post;
-import com.gft.grad.forum.model.repo.ForumRepository;
+import com.gft.grad.forum.model.repo.ForumThreadRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,19 +20,17 @@ import org.springframework.stereotype.Service;
 public class ThreadServiceImpl implements ThreadService {
 
     @Autowired
-    ForumRepository forumRepository;
+    ForumThreadRepository forumThreadRepository;
 
     @Override
     public List<Post> obtainPostsForThread(String threadName) {
-        return forumRepository.findPostsForThread(threadName);
+        return forumThreadRepository.findByName(threadName).getPosts();
     }
 
     @Override
     public void addPost(String threadName, Post post) {
-        forumRepository.addPost(threadName, post);
+        ForumThread thread = forumThreadRepository.findByName(threadName);
+        thread.getPosts().add(post);
+        forumThreadRepository.save(thread);
     }
-
-    
-    
-
 }

@@ -3,18 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gft.grad.forum.service;
+package com.gft.grad.forum.model.repo;
 
 import com.gft.grad.forum.model.Post;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author izielinski
  */
-public interface ThreadService {
-
-    public List<Post> obtainPostsForThread(String thread);
-
-    public void addPost(String thread, Post post);
+public interface PostRepository extends JpaRepository<Post, Long>{
 }
