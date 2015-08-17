@@ -1,3 +1,7 @@
-The OpenShift `diy` cartridge documentation can be found at:
+Sample Spring Boot Web Application with JSP
+====
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#diy
+Building and running
+---
+
+    mvn clean spring-boot:run
