@@ -2,24 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <t:wrapper>
-    <h1>LOG IN</h1>
-    <form:form modelAttribute="credentials" method="POST" action="/login">
-        <table>
-            <tr>
-                <td><form:label path="username">Username</form:label></td>
-                <td><form:input path="username" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td><form:label path="password">Password</form:label></td>
-                <td><form:input path="password" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Submit"/>
-                </td>
-            </tr>
-        </table>  
-    </form:form>
+    <div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <h2>SIGN IN</h2>
+            <form name='loginForm' class="form-signin" action="<c:url value='/login' />" method='POST'>
+                <input type='text' name='username' class="trans-input" placeholder="Login" >
+                <input type='password' name='password' class="trans-input" placeholder="Password"/>
+                <button class="btn btn-default btn-lg" type="submit"><spring:message code='main.login'/></button>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+        </div>  
+        <div class="col-sm-4"></div>
+    </div>
 </t:wrapper>

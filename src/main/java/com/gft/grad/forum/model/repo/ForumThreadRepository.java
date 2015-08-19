@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author izielinski
  */
 public interface ForumThreadRepository extends JpaRepository<ForumThread, Long> {
-    
+
     ForumThread findByName(String name);
 
 }

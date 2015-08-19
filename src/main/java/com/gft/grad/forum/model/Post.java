@@ -7,10 +7,12 @@ package com.gft.grad.forum.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import lombok.Data;
@@ -26,10 +28,11 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Version
     private Long version = 0L;
 
+    @Column(length = 3000)
     private String text;
     
     private Date date;

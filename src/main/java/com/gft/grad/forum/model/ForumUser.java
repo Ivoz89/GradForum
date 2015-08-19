@@ -6,10 +6,14 @@
 package com.gft.grad.forum.model;
 
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import lombok.Data;
 
@@ -24,10 +28,11 @@ public class ForumUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @Version
     private Long version = 0L;
 
-    private String username = "anonymous";
+    private String username;
     private String password;
+    private String role;
 }

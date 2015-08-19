@@ -14,10 +14,9 @@ import com.gft.grad.forum.model.ForumUser;
  */
 public interface UserService {
 
-    ForumUser logIn(Credentials credentials);
+    ForumUser findByUsername(String username);
 
     void register(ForumUser forumUser);
     
-    ForumUser findByUsername(String username);
-
+    ForumUser getCurrentUser();
 }

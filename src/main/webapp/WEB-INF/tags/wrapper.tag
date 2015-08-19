@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
     <!-- Bootstrap Core CSS -->
     <meta charset="utf-8">
@@ -14,58 +15,57 @@
     <link href="/public/bootstrap/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="/public/css/grad.css" rel="stylesheet">
     <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top"> 
-        <script src="/public/bootstrap/js/jquery.js"></script>
-        <script src="/public/bootstrap/js/bootstrap.min.js"></script>
-        <script src="/public/bootstrap/js/jquery.easing.min.js"></script>
+        <script type="text/javascript" src="/public/bootstrap/js/jquery.js"></script>
+        <script type="text/javascript" src="/public/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/public/bootstrap/js/jquery.easing.min.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
-        <script src="/public/bootstrap/js/grayscale.js"></script>
+        <script type="text/javascript" src="/public/bootstrap/js/grayscale.js"></script>
         <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <c:choose>
-                        <c:when test="${user.username eq 'anonymous'}">
-                            <a class="navbar-brand page-scroll" href="/login">
-                                <i class="fa fa-play"></i>  <span class="light"><spring:message code='main.login'/></span> 
-                            </a>
-                        </c:when>    
-                        <c:otherwise>
-                            <a class="navbar-brand page-scroll" href="/logout">
-                                <span class="light">LOG OUT</span> 
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
+                    <a class="navbar-brand page-scroll" href="/">
+                        <span class="light">GRAD FORUM</span> 
+                    </a>
                 </div>
-                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                    <ul class="nav navbar-nav">
-                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-                        <li>
-                            <a>USER: ${user.username}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                    <ul class="nav navbar-nav">
-                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-                        <li>
-                            <a href="/register">REGISTER</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
+                <sec:authorize access="!isAuthenticated()">
+                    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                        <a class="navbar-brand page-scroll" href="/login">
+                            LOGIN
+                        </a>
+                        </ul>
+                    </div>
+                </sec:authorize>
+                <sec:authorize access="isAuthenticated()">
+                    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                        <c:url var="logoutUrl" value="/logout"/>
+                        <form action="${logoutUrl}" method="post">
+                            <input class="btn btn-default btn-sm padu" type="submit" value="Log out" />
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                    </div>
+                </sec:authorize>
+                <sec:authorize access="!isAuthenticated()">
+                    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                        <a class="navbar-brand page-scroll" href="/register">
+                            REGISTER
+                        </a>
+                        </ul>
+                    </div>
+                </sec:authorize>
+                <sec:authorize access="isAuthenticated()">
+                    <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                        <a class="navbar-brand page-scroll" href="/user/${pageContext.request.userPrincipal.name}">
+                            <span class="glyphicon glyphicon-user"></span>
+                        </a>
+                    </div>
+                </sec:authorize>
             </div>
-            <!-- /.container -->
         </nav>
-
         <header class="intro">
             <div class="intro-body">
                 <div class="container">
@@ -93,11 +93,20 @@
                                     </c:otherwise>
                                 </c:choose>
                             </c:if>
-                            <jsp:doBody/>
                         </div>
+                    </div>
+                    <div class="row">
+                        <jsp:doBody/>
                     </div>
                 </div>
             </div>
         </header>
+        <footer>
+            <div class="container text-center">
+                <p>Ivo Zielinski</p>
+                <p>GFT Graduate Program 2015 Project</p>
+                <p>Created using  <a href="https://github.com/IronSummitMedia/startbootstrap">Grayscale</a> bootstrap template</p>
+            </div>
+        </footer>
     </body>
 </html>

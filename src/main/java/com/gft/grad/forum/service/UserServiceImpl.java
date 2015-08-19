@@ -5,10 +5,10 @@
  */
 package com.gft.grad.forum.service;
 
-import com.gft.grad.forum.controller.Credentials;
 import com.gft.grad.forum.model.ForumUser;
 import com.gft.grad.forum.model.repo.ForumUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,15 +16,10 @@ import org.springframework.stereotype.Service;
  * @author izielinski
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService  {
 
     @Autowired
     ForumUserRepository forumUserRepository;
-
-    @Override
-    public ForumUser logIn(Credentials c) {
-        return forumUserRepository.findByUsernameAndPassword(c.getUsername(), c.getPassword());
-    }
 
     @Override
     public void register(ForumUser forumUser) {
@@ -35,5 +30,9 @@ public class UserServiceImpl implements UserService {
     public ForumUser findByUsername(String username) {
         return forumUserRepository.findByUsername(username);
     }
-
+    
+    @Override
+    public ForumUser getCurrentUser() {
+        return forumUserRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
 }
