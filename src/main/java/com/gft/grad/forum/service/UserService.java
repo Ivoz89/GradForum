@@ -17,6 +17,8 @@ public interface UserService {
     ForumUser findByUsername(String username);
 
     void register(ForumUser forumUser);
-    
+
     ForumUser getCurrentUser();
+
+    void updateUser(ForumUser user);
 }

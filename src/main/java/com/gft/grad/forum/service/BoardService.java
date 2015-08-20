@@ -7,6 +7,8 @@ package com.gft.grad.forum.service;
 
 import com.gft.grad.forum.model.ForumThread;
 import java.util.List;
+import javax.transaction.Transactional;
+import static javax.transaction.Transactional.TxType.MANDATORY;
 
 /**
  *
@@ -14,6 +16,7 @@ import java.util.List;
  */
 public interface BoardService {
 
+    @Transactional(MANDATORY)
     List<ForumThread> obtainThreadsForBoard(String boardName);
 
     void addThread(String boardName, ForumThread thread);

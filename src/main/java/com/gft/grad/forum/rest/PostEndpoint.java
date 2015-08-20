@@ -10,6 +10,7 @@ import com.gft.grad.forum.model.Post;
 import com.gft.grad.forum.service.ThreadService;
 import com.gft.grad.forum.service.UserService;
 import java.util.Date;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class PostEndpoint {
     private UserService userService;
 
     @RequestMapping(value = "/board/{boardName}/{threadName}/{text}", method = RequestMethod.POST)
+    @Transactional
     public Post post(@PathVariable String boardName, @PathVariable String threadName,
             @PathVariable String text) {
         Post post = new Post();

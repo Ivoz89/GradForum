@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>  
 <script type="text/javascript">
     function doAjaxPost() {
@@ -48,13 +49,13 @@
 </script>
 <t:wrapper>
     <div class="col-lg-8 col-lg-offset-2">
-        <h3><c:out value="${boardName}"/> BOARD</h3>
+        <h3><c:out value="${boardName}"/></h3>
         <table id="threads" class="table table-hover">
             <thead>
                 <tr>
-                    <th>THREAD</th>
-                    <th>CREATOR</th>
-                    <th>POST COUNT</th>
+                    <th><spring:message code='common.thread'/></th>
+                    <th><spring:message code='common.creator'/></th>
+                    <th><spring:message code='common.post.count'/></th>
                 </tr></thead>
             <tbody>
                 <c:forEach items="${threads}" var="thread">

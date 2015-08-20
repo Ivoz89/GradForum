@@ -6,12 +6,8 @@
 package com.gft.grad.forum.controller;
 
 import com.gft.grad.forum.service.BoardService;
-import javax.transaction.Transactional;
-import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,16 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author izielinski
  */
 @Controller
-public class BoardController {
+public class ErrorController {
 
     @Autowired
     BoardService boardService;
 
-    @RequestMapping(value = "/board/{board}", method = RequestMethod.GET)
-    @Transactional(REQUIRES_NEW)
-    public String get(@PathVariable String board, Model model) {
-        model.addAttribute("threads", boardService.obtainThreadsForBoard(board));
-        model.addAttribute("boardName", board);
-        return "board";
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public String get() {
+        return "404";
     }
 }

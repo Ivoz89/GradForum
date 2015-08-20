@@ -6,6 +6,8 @@
 package com.gft.grad.forum.controller;
 
 import com.gft.grad.forum.service.ThreadService;
+import javax.transaction.Transactional;
+import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,7 @@ public class ThreadController {
     ThreadService threadService;
 
     @RequestMapping(value = "/board/{boardName}/{threadName}", method = RequestMethod.GET)
+    @Transactional(REQUIRES_NEW)
     public String get(@PathVariable String boardName, @PathVariable String threadName, Model model) {
         model.addAttribute("posts", threadService.obtainPostsForThread(threadName));
         model.addAttribute("threadName", threadName);

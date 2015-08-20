@@ -9,6 +9,7 @@ import com.gft.grad.forum.model.ForumThread;
 import com.gft.grad.forum.model.ForumUser;
 import com.gft.grad.forum.service.BoardService;
 import com.gft.grad.forum.service.UserService;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class ThreadEndpoint {
     private UserService userService;
 
     @RequestMapping(value = "/board/{boardName}/{threadName}", method = RequestMethod.POST)
+    @Transactional
     public ForumThread post(@PathVariable String boardName, @PathVariable String threadName) {
         ForumThread thread = new ForumThread();
         ForumUser creator = userService.getCurrentUser();

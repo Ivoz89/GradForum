@@ -6,14 +6,13 @@
 package com.gft.grad.forum.model;
 
 import java.io.Serializable;
-import java.util.Set;
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import lombok.Data;
 
@@ -29,10 +28,23 @@ public class ForumUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Lob
+    private byte[] avatar;
+
     @Version
     private Long version = 0L;
 
+    @Column(unique = true)
     private String username;
+
     private String password;
     private String role;
+
+    public String getAvatarString() {
+        if (avatar != null) {
+            return new String(avatar);
+        } else {
+            return null;
+        }
+    }
 }

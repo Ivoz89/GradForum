@@ -8,6 +8,7 @@ package com.gft.grad.forum.rest;
 import com.gft.grad.forum.model.Board;
 import com.gft.grad.forum.service.ForumService;
 import com.gft.grad.forum.service.UserService;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class BoardEndpoint {
     private UserService userService;
 
     @RequestMapping(value = "/board/{name}", method = RequestMethod.POST)
+    @Transactional
     public Board post(@PathVariable String name) {
         Board board = new Board();
         board.setName(name);

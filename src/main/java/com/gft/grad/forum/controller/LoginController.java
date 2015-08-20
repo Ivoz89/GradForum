@@ -29,22 +29,8 @@ public class LoginController {
         if (error != null) {
             redirectAttributes.addFlashAttribute("message", new Message(MessageType.ERROR,
                     "Login failed."));
+            return "redirect:/login";
         }
         return "login";
     }
-
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public String login(@ModelAttribute Credentials credentials, Model model,
-//            BindingResult result, RedirectAttributes redirectAttributes) {
-//        ForumUser forumUser = userService.logIn(credentials);
-//        if (forumUser != null) {
-//            model.addAttribute("user", forumUser);
-//            redirectAttributes.addFlashAttribute("message", new Message(MessageType.SUCCESS,
-//                    "Login successul."));
-//        } else {
-//            redirectAttributes.addFlashAttribute("message", new Message(MessageType.ERROR,
-//                    "Login failed."));
-//        }
-//        return "redirect:/";
-//    }
 }

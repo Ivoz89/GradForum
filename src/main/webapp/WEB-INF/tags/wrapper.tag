@@ -103,7 +103,7 @@
         </header>
         <footer>
             <div class="container text-center">
-                <p>Ivo Zielinski</p>
+                <p>Created by Ivo Zielinski</p>
                 <p>GFT Graduate Program 2015 Project</p>
                 <p>Created using  <a href="https://github.com/IronSummitMedia/startbootstrap">Grayscale</a> bootstrap template</p>
             </div>

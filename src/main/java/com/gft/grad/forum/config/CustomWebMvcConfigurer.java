@@ -5,15 +5,19 @@
  */
 package com.gft.grad.forum.config;
 
-import java.util.Locale;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.ErrorPage;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 /**
  *
@@ -23,16 +27,17 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 public class CustomWebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Bean
-    public LocaleResolver localeResolver() {
-        SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.ENGLISH);
-        return slr;
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("messages");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
-        lci.setParamName("language");
+        lci.setParamName("lang");
         return lci;
     }
 
@@ -40,6 +45,21 @@ public class CustomWebMvcConfigurer extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
     }
-    
-    
+
+    @Bean
+    public EmbeddedServletContainerCustomizer containerCustomizer() {
+        return new EmbeddedServletContainerCustomizer() {
+
+            @Override
+            public void customize(ConfigurableEmbeddedServletContainer cesc) {
+                cesc.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
+            }
+        };
+    }
+
+    @Bean
+    MultipartResolver multipartResolver() {
+        //TODO MAXIMUM IMAGE SIZE
+        return new StandardServletMultipartResolver();
+    }
 }

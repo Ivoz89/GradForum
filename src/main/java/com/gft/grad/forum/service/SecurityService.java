@@ -60,10 +60,10 @@ public class SecurityService implements UserDetailsService {
             
     @PostConstruct
     public void initAdminUser() {
-        ForumUser user = new ForumUser();
-        user.setUsername("a");
-        user.setPassword(passwordEncoder.encode("a"));
-        user.setRole("ROLE_ADMIN");
-        forumUserRepository.save(user);
+//        ForumUser user = new ForumUser();
+//        user.setUsername("a");
+//        user.setPassword(passwordEncoder.encode("a"));
+//        user.setRole("ROLE_ADMIN");
+//        forumUserRepository.save(user);
     }
 }

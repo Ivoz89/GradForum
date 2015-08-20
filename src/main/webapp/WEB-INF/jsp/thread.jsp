@@ -25,7 +25,9 @@
                 a.href = "/user/" + escapeHtml(post.creator.username);
                 a.text = escapeHtml(post.creator.username);
                 p.appendChild(a);
-                p.appendChild(document.createTextNode(" on " + post.date + " wrote:"));
+                var date = new Date(post.date);
+                var dateString = date.format("ddd mmm dd yyyy HH:MM:ss");
+                p.appendChild(document.createTextNode(" on " + dateString + " wrote:"));
                 textP = document.createElement('p');
                 textP.appendChild(document.createTextNode(escapeHtml(post.text)));
                 newArticle.appendChild(p);
@@ -50,6 +52,16 @@
         <div id="posts">
             <c:forEach items="${posts}" var="post">
                 <article>
+                    <p>
+                        <c:choose>
+                            <c:when test="${empty post.creator.avatarString}">
+                                <img src="/public/images/face.png" />
+                            </c:when>    
+                            <c:otherwise>
+                                <img src="data:image/jpg;base64,${post.creator.avatarString}" />
+                            </c:otherwise>
+                        </c:choose>
+                    </p>
                     <p><a href="/user/${post.creator.username}"><c:out value="${post.creator.username}"/></a> on ${post.date.toString()} wrote:</p>
                     <p><c:out value="${post.text}"/></p>
                 </article>

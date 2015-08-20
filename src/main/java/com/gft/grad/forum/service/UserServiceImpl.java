@@ -7,6 +7,7 @@ package com.gft.grad.forum.service;
 
 import com.gft.grad.forum.model.ForumUser;
 import com.gft.grad.forum.model.repo.ForumUserRepository;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,8 @@ import org.springframework.stereotype.Service;
  * @author izielinski
  */
 @Service
-public class UserServiceImpl implements UserService  {
+@Transactional
+public class UserServiceImpl implements UserService {
 
     @Autowired
     ForumUserRepository forumUserRepository;
@@ -30,9 +32,14 @@ public class UserServiceImpl implements UserService  {
     public ForumUser findByUsername(String username) {
         return forumUserRepository.findByUsername(username);
     }
-    
+
     @Override
     public ForumUser getCurrentUser() {
         return forumUserRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    @Override
+    public void updateUser(ForumUser user) {
+        forumUserRepository.save(user);
     }
 }
